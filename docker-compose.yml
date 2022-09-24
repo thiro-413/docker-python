@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - '6612:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: python_work
+      MYSQL_USER: terata
+      MYSQL_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - db:/var/lib/mysql
+    command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION --character-set-server=utf8 --collation-server=utf8_unicode_ci
+
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:9090
+    volumes:
+      - .:/code
+    ports:
+      - '18080:9090'
+    depends_on:
+      - db
+
+volumes:
+  db:
