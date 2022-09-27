@@ -1,0 +1,24 @@
+.btn-white {
+  background-color:unset;
+}
+
+.modal-area-inner{
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.modal-area-inner .hide{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+}
+
+#id_title {
+  margin-bottom: 1rem;
+}
+
+#id_content {
+  height: 12rem;
+}

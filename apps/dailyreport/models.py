@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class DailyReport(models.Model):
 
@@ -8,12 +9,13 @@ class DailyReport(models.Model):
 
     content=models.CharField(max_length=255)
 
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
 
     class Meta:
         db_table='daily_report'
+        ordering = ['created_at']
 
 # Create your models here.
