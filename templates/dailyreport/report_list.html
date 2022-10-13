@@ -9,46 +9,46 @@ dailyreport
 
 <div id="report">
   <div class="clearfix">
-    <button class="button float-right btn-white card" v-on:click="createReport">新規追加</button>
-    <modal name="modal-area">
+    <button class="button float-right btn-white card">新規追加</button>
+    <div class="modal-area">
       <div class="modal-area-inner">
-        <form @submit.prevent="saveReport">
+        <form>
           {% csrf_token %}
           <table>
             <tr>
               <th><label for="id_title">タイトル:</label></th>
                 <td>
-                  <input type="text" name="title" value="a" v-model="report.title" maxlength="30" required id="id_title">
+                  <input type="text" name="title" value="a" maxlength="30" required id="id_title">
                 </td>
             </tr>
             <tr>
               <th><label for="id_content">内容:</label></th>
               <td>
-                <textarea name="content" cols="40" rows="10" v-model="report.content" maxlength="255" required id="id_content"></textarea>
-                <input type="hidden" name="user_id" value="1" v-model="report.user_id" id="id_user_id">
+                <textarea name="content" cols="40" rows="10" maxlength="255" required id="id_content"></textarea>
+                <input type="hidden" name="user_id" value="1" id="id_user_id">
               </td>
             </tr>
             <tr><td colspan='2'><input class="btn-white" type="submit" value="作成"></td></tr>
           </table>
         </form>
-      <button class="hide btn-white" v-on:click="hide">X</button>
+      <button class="hide btn-white">X</button>
       </div>
-    </modal>
+    </div>
   </div>
-  <div class="mt-3">
-    <div class="card mb-2" v-for="report, index in daily_reports">
-        <div class="card-body">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label">
-                  タイトル : [[ report.title ]] | 内容:  [[ report.content ]]
-                </label>
-                <button type="button" class="close float-right" :data-report-id="report.id" v-on:click="deleteReport(report.id)">
-                  <span>&times;</span>
-                </button>
-                <button type="button" class="btn-white float-right mr-1 card" v-on:click="editReport(report.id, report.title, report.content)" :data-report-id="report.id" :data-report-title="report.title" :data-report-content="report.content">編集</button>
-            </div>
+  <div class="mt-3 report-card-box">
+    <div class="card mb-2 report-card">
+      <div class="card-body">
+        <div class="form-check">
+          <label class="form-check-label">
+            <span>タイトル：</span><span class="title-lable"></span>
+            <span>  内容：</span><span class="content-lable"></span>
+          </label>
+          <button type="button" class="close float-right">
+            <span>&times;</span>
+          </button>
+          <button type="button" class="btn-white float-right mr-1 card">編集</button>
         </div>
+      </div>
     </div>
   </div>
 </div>

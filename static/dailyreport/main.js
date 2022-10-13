@@ -1,109 +1,23 @@
-Vue.use(window["vue-js-modal"].default);
+// dailyReport.js
+const csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 
-const App = new Vue({
-  el: "#report",
-  data() {
-    return {
-        report: {title: '', content: '', user_id: 1, id: ''},
-        daily_reports: [],
-    }
+const report_list_box = document.getElementsByClassName('report-card-box')[0];
+const list_template = document.getElementsByClassName('report-card')[0];
+list_template.remove();
+
+fetch(URL, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrftoken
   },
-  delimiters: ['[[', ']]'],
-  methods: {
-    show: function() {
-      this.$modal.show('modal-area');
-    },
-    hide: function() {
-      this.$modal.hide('modal-area');
-    },
-
-    postReports() {
-      const csrftoken = Cookies.get('csrftoken');
-      fetch(URL, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
-        },
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((reports_list) => {
-          this.daily_reports = reports_list;
-      })
-      .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
-      });
-    },
-
-    createReport() {
-      this.resetParam();
-      this.show();
-    },
-
-    editReport(id, title, content) {
-      this.report.id = id;
-      this.report.title = title;
-      this.report.content = content;
-      this.show();
-    },
-
-    saveReport() {
-      const csrftoken = Cookies.get('csrftoken');
-      this.postReports();
-      fetch(URL, {
-        method: 'put',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
-        },
-        body: JSON.stringify(this.report),
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((report) => {
-        this.resetParam();
-        this.postReports();
-        this.hide();
-      })
-      .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
-      });
-    },
-
-    resetParam() {
-      this.report.title = '';
-      this.report.content = '';
-      this.report.id = '';
-    },
-
-    deleteReport(id) {
-      const csrftoken = Cookies.get('csrftoken');
-      this.postReports();
-      fetch(URL, {
-        method: 'delete',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
-        },
-        body: JSON.stringify({id: id}),
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        this.resetParam();
-        this.postReports();
-      })
-      .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
-      });
-    }
-
-  },
-  created() {
-    this.postReports();
-  },
+}).then(function(response) {
+  return response.json();
+}).then(function(reports_list) {
+  reports_list.forEach(report => {
+    report_item = list_template.cloneNode(true);
+    report_item.getElementsByClassName('title-lable')[0].appendChild(document.createTextNode(report.title));
+    report_item.getElementsByClassName('content-lable')[0].appendChild(document.createTextNode(report.content));
+    report_list_box.appendChild(report_item);
+  });
 });

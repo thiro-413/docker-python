@@ -2,6 +2,10 @@
   background-color:unset;
 }
 
+.modal-area {
+  display: none;
+}
+
 .modal-area-inner{
   padding: 10px;
   box-sizing: border-box;
