@@ -4,12 +4,33 @@
 
 .modal-area {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgb(179, 179, 179);
+  opacity: 90%;
 }
 
 .modal-area-inner{
-  padding: 10px;
+  width: 30rem;
+  height: 20rem;
+  margin: 5rem auto;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  background-color: aliceblue;
+  border-radius: 5px;
+}
+
+.modal-form {
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 2px solid rgb(0, 0, 0);
 }
 
 .modal-area-inner .hide{
@@ -25,4 +46,8 @@
 
 #id_content {
   height: 12rem;
+}
+
+.inline_block {
+  display: inline-block;
 }

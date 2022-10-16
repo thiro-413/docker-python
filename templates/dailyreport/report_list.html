@@ -9,29 +9,31 @@ dailyreport
 
 <div id="report">
   <div class="clearfix">
-    <button class="button float-right btn-white card">新規追加</button>
+    <button type="button" class="button float-right btn-white card create-modal-btn">新規追加</button>
     <div class="modal-area">
       <div class="modal-area-inner">
-        <form>
-          {% csrf_token %}
-          <table>
-            <tr>
-              <th><label for="id_title">タイトル:</label></th>
+        <div class="modal-form">
+          <form id="report-form" action="#" method='post'>
+            {% csrf_token %}
+            <table>
+              <tr>
+                <th><label for="id_title">タイトル:</label></th>
+                  <td>
+                    <input type="text" name="title" value="" maxlength="30" required id="id_title" class="report_title">
+                  </td>
+              </tr>
+              <tr>
+                <th><label for="id_content">内容:</label></th>
                 <td>
-                  <input type="text" name="title" value="a" maxlength="30" required id="id_title">
+                  <textarea name="content" cols="40" rows="10" maxlength="255" required id="id_content" class="report_content"></textarea>
+                  <input type="hidden" name="user_id" value="1" id="id_user_id" class="report_user_id">
                 </td>
-            </tr>
-            <tr>
-              <th><label for="id_content">内容:</label></th>
-              <td>
-                <textarea name="content" cols="40" rows="10" maxlength="255" required id="id_content"></textarea>
-                <input type="hidden" name="user_id" value="1" id="id_user_id">
-              </td>
-            </tr>
-            <tr><td colspan='2'><input class="btn-white" type="submit" value="作成"></td></tr>
-          </table>
-        </form>
-      <button class="hide btn-white">X</button>
+              </tr>
+              <tr><td colspan='2'><input class="btn-white" type="submit" value="作成"></td></tr>
+            </table>
+          </form>
+          <button class="hide btn-white modal-close-btn">X</button>
+        </div>
       </div>
     </div>
   </div>
@@ -43,10 +45,10 @@ dailyreport
             <span>タイトル：</span><span class="title-lable"></span>
             <span>  内容：</span><span class="content-lable"></span>
           </label>
-          <button type="button" class="close float-right">
+          <button type="button" class="close float-right report-delete-btn">
             <span>&times;</span>
           </button>
-          <button type="button" class="btn-white float-right mr-1 card">編集</button>
+          <button type="button" class="btn-white float-right mr-1 card report-edit-btn">編集</button>
         </div>
       </div>
     </div>
